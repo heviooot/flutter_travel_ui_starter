@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_ui_starter/widgets/destination_carousel.dart';
+import 'package:flutter_travel_ui_starter/widgets/hotel_carousel.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0; //use to set the selected icons
+  int _currentTab = 0;
 
   //place to store icons
   List<IconData> _icons = [
@@ -38,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Icon(
           _icons[index],
           size: 25.0,
-          color: Theme.of(context).primaryColor,
+          color: _selectedIndex == index
+              ? Theme.of(context).primaryColor
+              : Color(0xFFB4c1c4),
         ),
       ),
     );
@@ -77,10 +82,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     .entries
                     .map((MapEntry map) => _buildIcon(map.key))
                     .toList(), // make the icon iterable
-              )
+              ),
+
+              // TODO: dynamic destination depends on the selected icons
+
+              SizedBox(height: 20.0),
+
+              DestinationCarousel(),
+
+              SizedBox(height: 20.0),
+
+              HotelCarousel(),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTab,
+        onTap: (int value) {
+          setState(() {
+            _currentTab = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.local_pizza,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+                radius: 15.0,
+                backgroundImage: NetworkImage(
+                    'https://pbs.twimg.com/profile_images/1340161454482182150/47Zph7Cw_400x400.jpg')),
+            title: SizedBox.shrink(),
+          ),
+        ],
       ),
     );
   }
