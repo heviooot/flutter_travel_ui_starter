@@ -3,6 +3,8 @@ import 'package:flutter_travel_ui_starter/screens/home_screen.dart';
 
 void main() => runApp(MyApp());
 
+//TODO: merge the app to other app, and do code cleanup + documentation
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
